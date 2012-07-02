@@ -479,7 +479,7 @@ public class Archive implements Closeable {
 	 * Extract the file specified by the given header and write it to the
 	 * supplied output stream
 	 * 
-	 * @param header
+	 * @param hd
 	 *            the header to be extracted
 	 * @param os
 	 *            the outputstream
