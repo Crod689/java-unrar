@@ -570,4 +570,20 @@ public class Archive implements Closeable {
 		return pass;
 	}
 
+	public boolean test(){
+		if(!dataIO.isTestMode()||!isPass())
+			return false;
+		
+		if (!getMainHeader().isEncrypted()) {
+			FileHeader fh = nextFileHeader();
+			try {
+				extractFile(fh, null);
+				nextFileHeader();
+				return true;
+			} catch (Exception e) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

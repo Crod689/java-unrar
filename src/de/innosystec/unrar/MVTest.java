@@ -25,26 +25,7 @@ public class MVTest {
 				long start = System.currentTimeMillis();
 				try {
 					a = new Archive(f, pwds[i], true);  //test mode
-					if (a != null && a.isPass()) {
-						result = true;
-					} else {
-						result = false;
-					}
-
-					if (!a.getMainHeader().isEncrypted()) {
-						// result = true;
-						FileHeader fh = a.nextFileHeader();
-						try {
-							// while(fh!=null){
-							a.extractFile(fh, null);
-							fh = a.nextFileHeader();
-							// }
-							result = true;
-						} catch (Exception e) {
-							// e.printStackTrace();
-							result = false;
-						}
-					}
+					result = a.test();
 				} catch (Exception e) {
 					result = false;
 				}
