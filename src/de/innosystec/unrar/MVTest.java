@@ -24,24 +24,20 @@ public class MVTest {
 			for (int i = 0; i < pwds.length; i++) {
 				long start = System.currentTimeMillis();
 				try {
-					a = new Archive(f, pwds[i], true);  //test mode
-					if (a != null && a.isPass()) {
+					a = new Archive(f, pwds[i], true);  //test mode, 测试模式
+					if (a != null && a.isPass()) { //头部读入完成。如果文件头加密，能正常读入头部，则说明密码正确，无需再做其他验证
 						result = true;
 					} else {
 						result = false;
 					}
 
-					if (!a.getMainHeader().isEncrypted()) {
-						// result = true;
+					if (!a.getMainHeader().isEncrypted()) { //如果文件头没加密，则需解压其中一个文件以验证密码
 						FileHeader fh = a.nextFileHeader();
 						try {
-							// while(fh!=null){
 							a.extractFile(fh, null);
 							fh = a.nextFileHeader();
-							// }
 							result = true;
 						} catch (Exception e) {
-							// e.printStackTrace();
 							result = false;
 						}
 					}
@@ -54,7 +50,7 @@ public class MVTest {
 			}
 		} else {
 			try{
-				a = new Archive(f, "1234", false);  //extract mode
+				a = new Archive(f, "1234", false);  //extract mode, 解压模式
 			}catch(Exception e){
 				e.printStackTrace();
 			}
