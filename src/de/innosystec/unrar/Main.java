@@ -43,6 +43,10 @@ public class Main {
 		}
 		
 		File f = new File(file);
+		if(!f.exists()){
+			System.out.println("File " + file +" does not exiest.");
+			System.exit(-1);
+		}
 		Archive a = null;
 		boolean result = false;
 
