@@ -20,6 +20,8 @@ package de.innosystec.unrar.rarfile;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -163,6 +165,11 @@ public class FileHeader extends BlockHeader {
 		fileName = new String(fileNameBytes);
 		fileNameW = "";
 	    }
+	    
+	    //added by hoy, 处理中文问题
+	    if(existZH(fileNameW)){  
+            fileName = fileNameW;  
+        }
 	}
 
 	if (UnrarHeadertype.NewSubHeader.equals(headerType)) {
@@ -195,6 +202,16 @@ public class FileHeader extends BlockHeader {
 
     }
 
+    private boolean existZH(String str) {  
+        String regEx = "[\\u4e00-\\u9fa5]";  
+        Pattern p = Pattern.compile(regEx);  
+        Matcher m = p.matcher(str);  
+        while (m.find()) {  
+            return true;  
+        }  
+        return false;  
+    }  
+    
     @Override
     public void print() {
 	super.print();
